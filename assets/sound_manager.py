@@ -66,7 +66,10 @@ class SoundManager:
         # Create stereo sound
         stereo_wave = np.array([wave, wave]).T
         
-        return pygame.mixer.Sound(stereo_wave)
+        # Convert to bytes for pygame
+        stereo_bytes = stereo_wave.tobytes()
+        
+        return pygame.mixer.Sound(buffer=stereo_bytes)
     
     def _create_game_over_sound(self) -> pygame.mixer.Sound:
         """Create game over sound"""
@@ -92,7 +95,8 @@ class SoundManager:
         wave = np.int16(wave * 32767 * 0.4)
         stereo_wave = np.array([wave, wave]).T
         
-        return pygame.mixer.Sound(stereo_wave)
+        stereo_bytes = stereo_wave.tobytes()
+        return pygame.mixer.Sound(buffer=stereo_bytes)
     
     def _create_move_sound(self) -> pygame.mixer.Sound:
         """Create movement sound (very subtle)"""
@@ -109,7 +113,8 @@ class SoundManager:
         
         stereo_wave = np.array([wave, wave]).T
         
-        return pygame.mixer.Sound(stereo_wave)
+        stereo_bytes = stereo_wave.tobytes()
+        return pygame.mixer.Sound(buffer=stereo_bytes)
     
     def _create_bonus_sound(self) -> pygame.mixer.Sound:
         """Create bonus food sound"""
@@ -134,7 +139,8 @@ class SoundManager:
         wave = np.int16(wave * 32767 * 0.5)
         stereo_wave = np.array([wave, wave]).T
         
-        return pygame.mixer.Sound(stereo_wave)
+        stereo_bytes = stereo_wave.tobytes()
+        return pygame.mixer.Sound(buffer=stereo_bytes)
     
     def _create_level_up_sound(self) -> pygame.mixer.Sound:
         """Create level up sound"""
@@ -162,7 +168,8 @@ class SoundManager:
         wave = np.int16(wave * 32767 * 0.4)
         stereo_wave = np.array([wave, wave]).T
         
-        return pygame.mixer.Sound(stereo_wave)
+        stereo_bytes = stereo_wave.tobytes()
+        return pygame.mixer.Sound(buffer=stereo_bytes)
     
     def _create_collision_sound(self) -> pygame.mixer.Sound:
         """Create collision sound"""
@@ -180,7 +187,8 @@ class SoundManager:
         wave = np.int16(wave * 32767 * 0.3)
         stereo_wave = np.array([wave, wave]).T
         
-        return pygame.mixer.Sound(stereo_wave)
+        stereo_bytes = stereo_wave.tobytes()
+        return pygame.mixer.Sound(buffer=stereo_bytes)
     
     def play_sound(self, sound_name: str, volume_multiplier: float = 1.0):
         """
