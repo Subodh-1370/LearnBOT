@@ -1,0 +1,9 @@
+{
+  "models\\best_model.pth": {
+    "model_path": "models\\best_model.pth",
+    "num_games": 50,
+    "timestamp": "2026-04-29T15:25:47.924967",
+    "scores": {
+      "mean": 0.02,
+      "std": 0.13999999999999999,
+      "min": 

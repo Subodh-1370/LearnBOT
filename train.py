@@ -1,11 +1,13 @@
 import pygame
+import matplotlib
+matplotlib.use('Agg')  # Use non-interactive backend
 import matplotlib.pyplot as plt
 import numpy as np
 import os
 import time
 from datetime import datetime
 
-from game.snake_game import SnakeGame
+from game.enhanced_snake_game import EnhancedSnakeGame
 from agent.agent import DQNAgent
 
 class TrainingPipeline:
@@ -37,17 +39,17 @@ class TrainingPipeline:
         self.plot_dir = plot_dir
         
         # Initialize environment and agent
-        self.env = SnakeGame(speed=50)  # Moderate speed for training
+        self.env = EnhancedSnakeGame(speed=50, headless=True, enable_animations=False)  # Headless mode for training performance
         self.agent = DQNAgent(
             state_size=11,
             action_size=3,
-            lr=0.001,
-            gamma=0.9,
+            lr=0.0005,  # Lower learning rate for more stable training
+            gamma=0.95,  # Higher discount factor for long-term planning
             epsilon=1.0,
             epsilon_decay=0.995,
             epsilon_min=0.01,
-            memory_size=10000,
-            batch_size=32,
+            memory_size=50000,  # Larger replay buffer
+            batch_size=64,  # Larger batch size for better gradient estimates
             target_update=100,
             use_prioritized_replay=False
         )
@@ -195,15 +197,15 @@ class TrainingPipeline:
         self.ax3.set_title(f'Exploration Rate (Episode {episode})')
         self.ax3.grid(True, alpha=0.3)
         
-        # Adjust layout and show
+        # Adjust layout and save
         plt.tight_layout()
-        plt.pause(0.01)  # Brief pause to update the plot
         
-        # Save plot if requested
-        if save:
+        # Save plot if requested or periodically
+        if save or episode % self.plot_freq == 0:
             plot_path = os.path.join(self.plot_dir, f'training_progress_episode_{episode}.png')
             self.fig.savefig(plot_path, dpi=150, bbox_inches='tight')
-            print(f"Training plot saved: {plot_path}")
+            if episode % self.plot_freq == 0:
+                print(f"Training plot saved: {plot_path}")
     
     def evaluate(self, num_episodes=10, model_path=None):
         """
@@ -226,7 +228,7 @@ class TrainingPipeline:
         
         for episode in range(1, num_episodes + 1):
             # Create environment with rendering enabled
-            eval_env = SnakeGame(speed=100)  # Slower speed for viewing
+            eval_env = EnhancedSnakeGame(speed=100, headless=False, enable_animations=True)  # Slower speed for viewing
             
             # Play episode
             score, total_reward = self.agent.play_episode(eval_env, render=True)
@@ -255,7 +257,7 @@ def main():
     
     # Create training pipeline
     trainer = TrainingPipeline(
-        num_episodes=500,
+        num_episodes=1000,  # Train longer for better results
         save_freq=100,
         plot_freq=25,
         model_dir='models',

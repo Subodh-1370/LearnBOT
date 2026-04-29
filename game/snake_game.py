@@ -29,6 +29,9 @@ class SnakeGame:
         self.w = width // block_size
         self.h = height // block_size
         
+        # Initialize pygame
+        pygame.init()
+        
         # Initialize display
         pygame.display.set_caption('Snake Game - LearnBot')
         self.display = pygame.display.set_mode((self.width, self.height))
@@ -42,7 +45,11 @@ class SnakeGame:
         self.GREEN2 = (0, 200, 0)
         
         # Font for score
-        self.font = pygame.font.SysFont('arial', 25)
+        try:
+            self.font = pygame.font.SysFont('arial', 25)
+        except:
+            # Fallback to default font if Arial is not available
+            self.font = pygame.font.Font(None, 36)
         
         self.reset()
     

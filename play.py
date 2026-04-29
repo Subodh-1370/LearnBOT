@@ -4,7 +4,7 @@ import os
 import time
 import argparse
 
-from game.snake_game import SnakeGame
+from game.enhanced_snake_game import EnhancedSnakeGame
 from agent.agent import DQNAgent
 
 class PlayMode:
@@ -26,7 +26,7 @@ class PlayMode:
         self.display_info = display_info
         
         # Initialize environment
-        self.env = SnakeGame(speed=speed)
+        self.env = EnhancedSnakeGame(speed=speed, headless=False, enable_animations=True)  # Full visuals for play mode
         
         # Initialize agent
         self.agent = DQNAgent(
