@@ -1,0 +1,21 @@
+# Core dependencies for LearnBot - Reinforcement Learning Game Agent
+
+# Deep Learning
+torch>=1.9.0
+torchvision>=0.10.0
+
+# Game Development
+pygame>=2.1.0
+
+# Data Processing and Visualization
+numpy>=1.21.0
+matplotlib>=3.5.0
+
+# Optional: For enhanced plotting (not required but recommended)
+seaborn>=0.11.0
+
+# Development and Testing (optional)
+pytest>=6.2.0
+jupyter>=1.0.0
+
+# Note: Python 3.7+ is recommended for full compatibility
